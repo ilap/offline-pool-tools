@@ -1,0 +1,16 @@
+{
+  "name": "cold-js",
+  "version": "0.0.1",
+  "main": "main.js",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "slip39": "^0.1.7",
+    "bip39": "^3.0.2",
+    "ed25519": "^0.0.4",
+    "@anzerr/blake2b": "^1.0.11",
+    "yargs": "^15.4.1"
+  },
+  "devDependencies": {},
+  "description": ""
+}
