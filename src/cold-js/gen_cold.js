@@ -35,7 +35,7 @@ const argv = yargs
   })
   .option('seed', {
     alias: 's',
-    description: 'hexa representation of 32-byte long seed',
+    description: 'hexa representation of a 32-byte long random seed',
     type: 'string',
   })
   .option('output', {
@@ -84,47 +84,49 @@ const coldKeyPair = ed25519.MakeKeypair(toByteArray(seed))
 console.log(`Write down the following 24-length mnemonic for recovery`)
 console.log(`24-word length mnemonic : ${mnemonic}\n`)
 
-console.log(`Writing cold signing key to "${prefix}.skey" file`)
-var data = `type: Node operator signing key
-title: Stake pool operator key
-cbor-hex:
- 5820${coldKeyPair.privateKey.toString('hex').slice(0,64)}
-`
 
-fs.writeFile(`${prefix}.skey`, data, (err) => {
+console.log(`Writing cold signing key to "${prefix}.skey" file`)
+
+var json = {
+  type: "",
+  description: "",
+  cborHex: ""
+}
+
+json.type = 'StakePoolSigningKey_ed25519'
+json.description = 'Stake Pool Operator Signing Key'
+json.cborHex = `5820${coldKeyPair.privateKey.toString('hex').slice(0,64)}`
+
+fs.writeFile(`${prefix}.skey`, JSON.stringify(json, null, 4), 'utf8', (err) => {
   if (err) throw err;
 })
 
 console.log(`Writing cold verifying key to "${prefix}.vkey file."`)
-data = `type: Node operator verification key
-title: Stake pool operator key
-cbor-hex:
- 5820${coldKeyPair.publicKey.toString('hex')}
-`
-fs.writeFile(`${prefix}.vkey`, data, (err) => {
+json.type = 'StakePoolVerificationKey_ed25519'
+json.description = 'Stake Pool Operator Verification Key'
+json.cborHex = `5820${coldKeyPair.publicKey.toString('hex')}`
+
+fs.writeFile(`${prefix}.vkey`, JSON.stringify(json, null, 4), 'utf8', (err) => {
   if (err) throw err;
 })
-
 
 console.log(`Writing cold counter to "${prefix}.counter" file.`)
-data = `type: Node operational certificate issue counter
-title: Next certificate issue number: 0
-cbor-hex:
- 00
- `
-fs.writeFile(`${prefix}.counter`, data, (err) => {
+json.type = 'NodeOperationalCertificateIssueCounter'
+json.description = 'Next certificate issue number: 0'
+json.cborHex = `82005820${coldKeyPair.publicKey.toString('hex')}`
+
+fs.writeFile(`${prefix}.counter`, JSON.stringify(json, null, 4), 'utf8', (err) => {
   if (err) throw err;
 })
 
-// Pool Id
+// Pool Id, the blake2b_224 hash of the public key.
 let context = blake.createHash({
   digestLength: 28
 })
 
 context.update(coldKeyPair.publicKey)
-data = context.digest().toString('hex')
+const data = context.digest().toString('hex')
 console.log(`Writing cold pool id to "${prefix}.id" file.`)
 fs.writeFile(`${prefix}.id`, data, (err) => {
   if (err) throw err;
 })
-
