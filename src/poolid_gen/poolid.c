@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 
 	char *prefix_string = argv[1];
 
-		uint8_t prv[64] = {0};
+	uint8_t prv[64] = {0};
 	uint8_t pub[32] = {0};
 	uint8_t poolid[28] = {0};
 
@@ -54,8 +54,6 @@ int main(int argc, char *argv[])
 	time_t currtime;
 
 	const int prefix_len = strlen(prefix_string);
-
-	int is_odd = prefix_len % 2 == 1;
 
 	hex2bin(prefix_string, prefix_len, prefix);
 	arr2hex(prefix, prefix_len / 2);
@@ -80,7 +78,7 @@ int main(int argc, char *argv[])
 		if (count % 1000 == 0)
 		{
 			currtime = time(NULL);
-			printf("date: %d %s\n", count, ctime(&currtime));
+			printf("date: %d %s", count, ctime(&currtime));
 		}
 	}
 	printf("Found at %d\n", count);

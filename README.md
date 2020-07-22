@@ -32,3 +32,9 @@ First the prerequisities should be installed online after the OS (on encrypted s
 When it's done the device can be air-gapped i.e. offline of the Internet (no wi-fi enabled, no any connection to any network). Therefore, only console access meaning keyboard and display and USB stick access for transferring keys, certificates and transactions.
 
 ## Donwload binaries
+
+We need the latest binaries of the cardano-wallet for generating addresses offline.
+> As of 22/07/2022
+
+- [`cardano-wallet-jormungandr` 2020.7.6](https://hydra.iohk.io/build/3556621/download/1/cardano-wallet-jormungandr-2020.7.6-linux64.tar.gz)
+- [`cardano-wallet-shelley` 2020.7.6](https://hydra.iohk.io/build/3556601/download/1/cardano-wallet-shelley-2020.7.6-linux64.tar.gz)

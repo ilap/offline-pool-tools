@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+
+OFF_DIR=$(pwd)
+
+OFF_BIN="$OFF_DIR/bin"
+OFF_SCRIPTS="$OFF_DIR/scripts"
+
+export PATH="$PATH:$OFF_BIN:$OFF_SCRIPTS"
+
+source <( caddr --bash-completion-script `which caddr`)
