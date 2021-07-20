@@ -6,6 +6,6 @@ OFF_DIR=$(pwd)
 OFF_BIN="$OFF_DIR/bin"
 OFF_SCRIPTS="$OFF_DIR/scripts"
 
-export PATH="$PATH:$OFF_BIN:$OFF_SCRIPTS"
+export PATH="$OFF_BIN:$OFF_SCRIPTS:$PATH"
 
 source <( caddr --bash-completion-script `which caddr`)
